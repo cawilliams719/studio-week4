@@ -134,8 +134,8 @@
   // initialize the map
   var map = L.map('mapId').setView([42.35, -71.08], 13);
   // load a tile layer
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
     maxZoom: 17,
     minZoom: 9
   }).addTo(map);
@@ -177,8 +177,8 @@
   // Step 1: Add Bike lanes
   var map_s1 = L.map('map1').setView([42.35, -71.08], 13);
   // load a tile layer
-  L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-    attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
     maxZoom: 17,
     minZoom: 9
   }).addTo(map_s1);
@@ -192,8 +192,8 @@
   // Step 2: Rat Points
   var map_s2 = L.map('map2').setView([42.35, -71.08], 13);
   // load a tile layer
-  L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-    attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
     maxZoom: 17,
     minZoom: 9
   }).addTo(map_s2);
@@ -206,9 +206,8 @@
   //Step 3: Rat Gif Map
   var map_s3 = L.map('map3').setView([42.35, -71.08], 13);
   // load a tile layer
-  L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-    attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-    maxZoom: 17,
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
     minZoom: 9
   }).addTo(map_s3);
   $.getJSON("rodents.geojson",function(data){
@@ -226,9 +225,9 @@
   // Step 4: Add Interaction
   var map_s4 = L.map('map4').setView([42.35, -71.08], 13);
   // load a tile layer
-  L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-    attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-    maxZoom: 17,
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+  maxZoom: 17,
     minZoom: 9
   }).addTo(map_s4);
   $.getJSON("rodents.geojson",function(data){
@@ -248,8 +247,8 @@
   // Step 5: Add neighborhoods
   var map_s5 = L.map('map5').setView([42.35, -71.08], 13);
   // load a tile layer
-  L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-    attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
     maxZoom: 17,
     minZoom: 9
   }).addTo(map_s5);
@@ -274,8 +273,8 @@
   // Step 6: add thematic map
     var map_s6 = L.map('map6').setView([42.35, -71.08], 13);
     // load a tile layer
-    L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
-      attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+    attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
       maxZoom: 17,
       minZoom: 9
     }).addTo(map_s6);
