@@ -2,17 +2,18 @@
 <html>
 
 <head>
-  <title>Step 6: Add Thematic Map</title>
+  <title>Step 7: Add Markers</title>
   <!--Leaflet style sheet and Library --->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="./MarkerCluster.Default.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="./leaflet-heat.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
   <style>
-  /* Map 6 */
-      #map6 {
+  /* Map 7*/
+      #map7 {
       position: absolute;
       height: 100%;
       width: 100%;
@@ -26,16 +27,17 @@
 
 <body>
   <!-- div map container -->
-    <div id="map6"></div>
+    <div id="map7"></div>
   <script>
   // Step 6: add thematic map
-    var map_s6 = L.map('map6').setView([42.3601, -71.0589], 13);
+  // initialize the map
+    var map_s7 = L.map('map7').setView([42.3601, -71.0589], 13);
     // load a tile layer
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
     attribution: '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">Carto</a> | Data by <a href="http://mass.gov/mgis">MassGIS</a>',
       maxZoom: 17,
       minZoom: 9
-    }).addTo(map_s6);
+    }).addTo(map_s7);
      $.getJSON("neighborhoods.geojson",function(hoodData){
       L.geoJson( hoodData , {
       style: function(feature){
@@ -52,20 +54,23 @@
       onEachFeature: function( feature, layer ){
         layer.bindPopup( "<strong>" + feature.properties.Name + "</strong><br/>" + feature.properties.density + " rats per square mile" )
       }
-    }).addTo(map_s6);
+    }).addTo(map_s7);
   });
     $.getJSON("rodents.geojson",function(data){
       var ratIcon = L.icon({
         iconUrl: 'rat.png',
         iconSize: [60,50]
       });
-      L.geoJson(data,{
+      var rodents = L.geoJson(data,{
         pointToLayer: function(feature,latlng){
           var marker = L.marker(latlng,{icon: ratIcon});
           marker.bindPopup(feature.properties.Location + '<br/>' + feature.properties.OPEN_DT);
           return marker;
         }
-    }).addTo(map_s6);
+      });
+      var clusters = L.markerClusterGroup();
+    clusters.addLayer(rodents);
+    map_s7.addLayer(clusters);
   });
   </script>
 </body>

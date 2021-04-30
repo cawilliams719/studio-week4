@@ -107,3 +107,14 @@ li a:hover {
   color: white;
   transform: scale(1.2);
 }
+
+/* Hyperlink */
+.hyp {
+  color: #fff;
+  text-decoration: underline;
+  font-weight: bold;
+}
+a.hyp:hover {
+  color: #62a3b5;
+  text-decoration: underline;
+}
