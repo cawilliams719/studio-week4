@@ -4,6 +4,8 @@
 <head>
   <title>Step 1: Add Bike Lanes</title>
   <!--Leaflet style sheet and Library --->
+  <link rel="stylesheet" href="./Leaflet-1.0.3/leaflet.css"/>
+  <script src="./Leaflet-1.0.3/leaflet.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" />
@@ -12,7 +14,7 @@
   <script src="./leaflet-heat.js"></script>
   <style>
   /* Map 1 */
-      #map1 { 
+      #map1 {
       position: absolute;
       height: 100%;
       width: 100%;
@@ -37,10 +39,11 @@
     minZoom: 9
   }).addTo(map_s1);
   // bike lanes
+  // tutorial methods - bike doesn't render on github pages
   L.tileLayer('http://tiles.mapc.org/trailmap-onroad/{z}/{x}/{y}.png',
   {
-    maxZoom: 17,
-    minZoom: 9
+   maxZoom: 17,
+   minZoom: 9
   }).addTo(map_s1);
   </script>
 </body>
