@@ -28,7 +28,6 @@
     }
 
     /* Popup styling */
-
     .mapboxgl-popup {
       padding-bottom: 5px;
     }
@@ -98,12 +97,12 @@
 
     .colors {
       background: linear-gradient(to right,
-        #2dc4b2,
-        #3bb3c3,
-        #669ec4,
-        #8b88b6,
-        #a2719b,
-        #aa5e79);
+        #4575b4,
+        #91bfdb,
+        #e0f3f8,
+        #fee090,
+        #fc8d59,
+        #d73027);
       margin-bottom: 5px;
     }
 
@@ -220,12 +219,12 @@
               'interpolate',
               ['linear'],
               ['number', ['get', 'TmeanAvg']],
-              69, '#2DC4B2',
-              71, '#3BB3C3',
-              73, '#669EC4',
-              75, '#8B88B6',
-              77, '#A2719B',
-              79, '#AA5E79'
+              69, '#4575b4',
+              71, '#91bfdb',
+              73, '#e0f3f8',
+              75, '#fee090',
+              77, '#fc8d59',
+              79, '#d73027'
             ],
             'circle-opacity': 0.8
           }
@@ -239,7 +238,7 @@
           //set popup text
           //You can adjust the values of the popup to match the headers of your CSV.
           // For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
-          var description = `<h3>` + e.features[0].properties.Station + `</h3>` + `<h4>` + `<b>` + `Elevation: ` + `</b>` + e.features[0].properties.Elevation + ` meters` + `</h4>` + `<h4>` + `<b>` + `Temperature: ` + `</b>` + e.features[0].properties.TmeanAvg + ` °F` + `</h4>`;
+          var description = `<h3>` + e.features[0].properties.Station + `</h3>` + `<h4>` + `<b>` + `Elevation: ` + `</b>` + e.features[0].properties.Elevation + ` meters` + `</h4>` + `<h3>` + `<b>` + `Avg. Temperature` + `</b>` + `</h3>` + `<h4>` + `<b>` + `Minimum: ` + `</b>` + e.features[0].properties.TminAvg + ` °F` + `</h4>` + `<h4>` + `<b>` + `Mean: ` + `</b>` + e.features[0].properties.TmeanAvg + ` °F` + `</h4>` + `<h4>` + `<b>` + `Maximum: ` + `</b>` + e.features[0].properties.TmaxAvg + ` °F` + `</h4>`;
 
           // Ensure that if the map is zoomed out such that multiple
           // copies of the feature are visible, the popup appears
