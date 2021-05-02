@@ -4,11 +4,114 @@
 <head>
   <meta charset='utf-8' />
   <title>Studio Week 4</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v2.0.1/mapbox-gl.css' rel='stylesheet' />
+<script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
+<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- stylesheet for fonts --->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
-  <style type="text/css">
+  <style>
+  body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 250px;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Popup styling */
+
+    .mapboxgl-popup {
+      padding-bottom: 5px;
+    }
+
+    .mapboxgl-popup-close-button {
+      display: none;
+    }
+
+    .mapboxgl-popup-content {
+      font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+      padding: 0;
+      width: 250px;
+    }
+
+    .mapboxgl-popup-content-wrapper {
+      padding: 1%;
+    }
+
+    .mapboxgl-popup-content h3 {
+      background: rgb(61, 59, 59);
+      text-align: center;
+      color: #fff;
+      margin: 0;
+      display: block;
+      padding: 15px;
+      font-weight: 700;
+      margin-top: -5px;
+    }
+
+    .mapboxgl-popup-content h4 {
+      margin: 0;
+      display: block;
+      padding: 10px 3px 10px 10px;
+      font-weight: 400;
+    }
+
+    .mapboxgl-container {
+      cursor: pointer;
+    }
+
+    .mapboxgl-popup-anchor-top>.mapboxgl-popup-content {
+      margin-top: 3px;
+    }
+
+    .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
+      border-bottom-color: rgb(61, 59, 59);
+    }
+    #console {
+      position: absolute;
+      top: 250px;
+      margin: 20px;
+      width: 240px;
+      background-color: #545757;
+      opacity: 0.75;
+      box-shadow: 2.5px 2.5px 5px grey;
+      padding: 10px 20px;
+    }
+
+    .session {
+      margin-bottom: 20px;
+    }
+
+    .row {
+      height: 20px;
+      width: 100%;
+    }
+
+    .colors {
+      background: linear-gradient(to right,
+        #2dc4b2,
+        #3bb3c3,
+        #669ec4,
+        #8b88b6,
+        #a2719b,
+        #aa5e79);
+      margin-bottom: 5px;
+    }
+
+    .label {
+      width: 15%;
+      display: inline-block;
+      text-align: center;
+    }
   </style>
   <!-- Adding styling info for page layout by reading in a CSS file -->
   <link rel="stylesheet" href="styles.css">
@@ -21,7 +124,7 @@
     <a href="https://github.com/cawilliams719"><i class="fa fa-github"></i></a>
   </div>
 
-  <h1>Studio Week 4 <br> Choose your own Adventure! </h1>
+  <h1>Studio Week 4 <br> Mean Annual July Temperature</h1>
   <!-- Add multiple pages to web page-->
   <!-- active class displays the grey box around current page-->
   <ul>
@@ -32,7 +135,145 @@
   <br>
 
   <!-- Add a div to give the map somewhere to go -->
+<div id='map'></div>
+ <div id='console'>
+   <h2>July Average Temperature 2005 to 2014</h2>
+   <div class='session'>
+  <h2>Temperature °F</h2>
+  <div class='row colors'>
+  </div>
+  <div class='row labels'>
+    <div class='label'>69</div>
+    <div class='label'>71</div>
+    <div class='label'>73</div>
+    <div class='label'>75</div>
+    <div class='label'>77</div>
+    <div class='label'>79+</div>
+  </div>
+  </div>
+</div>
+
   <script>
+  var transformRequest = (url, resourceType) => {
+  var isMapboxRequest =
+    url.slice(8, 22) === "api.mapbox.com" ||
+    url.slice(10, 26) === "tiles.mapbox.com";
+  return {
+    url: isMapboxRequest
+      ? url.replace("?", "?pluginName=sheetMapper&")
+      : url
+  };
+};
+  mapboxgl.accessToken = "pk.eyJ1IjoiY2F3aWxsaWFtcyIsImEiOiJja2xsZ3pxdmczaDZjMndxZXB2aXdrdTZ3In0.TBD0QCuYQMkeamI_srV2XQ";
+  var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/light-v10', // YOUR TURN: choose a style: https://docs.mapbox.com/api/maps/#styles
+    center: [-74.0060, 40.7128], // starting position [lng, lat]
+    zoom: 10, // starting zoom
+    transformRequest: transformRequest
+  });
+  $(document).ready(function () {
+  $.ajax({
+    type: "GET",
+    //YOUR TURN: Replace with csv export link my sharing link:https://docs.google.com/spreadsheets/d/1ZbvAAMryTlWFTrzFVwUhBqeXylmcMaIHekkREHkmRGM/edit?usp=sharing
+    url: 'https://docs.google.com/spreadsheets/d/1ZbvAAMryTlWFTrzFVwUhBqeXylmcMaIHekkREHkmRGM/gviz/tq?tqx=out:csv&sheet=Sheet1',
+    dataType: "text",
+    success: function (csvData) { makeGeoJSON(csvData); }
+  });
+  function makeGeoJSON(csvData) {
+    csv2geojson.csv2geojson(csvData, {
+      latfield: 'Latitude',
+      lonfield: 'Longitude',
+      delimiter: ',',
+      numericFields: 'TminAvg,TmeanAvg,TmaxAvg'
+    }, function (err, data) {
+      map.on('load', function () {
+        //Add the the layer to the map
+        map.addLayer({
+          'id': 'csvData',
+          'type': 'circle',
+          'source': {
+            'type': 'geojson',
+            'data': data
+          },
+          'paint': {
+            'circle-radius': [
+              'interpolate',
+              ['linear'],
+              ['number', ['get', 'TmeanAvg']],
+              69,
+              2,
+              71,
+              4,
+              73,
+              8,
+              75,
+              12,
+              77,
+              16,
+              78,
+              20,
+              79,
+              24
+            ],
+            'circle-color': [
+              'interpolate',
+              ['linear'],
+              ['number', ['get', 'TmeanAvg']],
+              69, '#2DC4B2',
+              71, '#3BB3C3',
+              73, '#669EC4',
+              75, '#8B88B6',
+              77, '#A2719B',
+              79, '#AA5E79'
+            ],
+            'circle-opacity': 0.8
+          }
+        });
+
+        // When a click event occurs on a feature in the csvData layer, open a popup at the
+        // location of the feature, with description HTML from its properties.
+        map.on('click', 'csvData', function (e) {
+          var coordinates = e.features[0].geometry.coordinates.slice();
+
+          //set popup text
+          //You can adjust the values of the popup to match the headers of your CSV.
+          // For example: e.features[0].properties.Name is retrieving information from the field Name in the original CSV.
+          var description = `<h3>` + e.features[0].properties.Station + `</h3>` + `<h4>` + `<b>` + `Elevation: ` + `</b>` + e.features[0].properties.Elevation + ` meters` + `</h4>` + `<h4>` + `<b>` + `Temperature: ` + `</b>` + e.features[0].properties.TmeanAvg + ` °F` + `</h4>`;
+
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          //add Popup to map
+
+          new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+        });
+
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on('mouseenter', 'csvData', function () {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'places', function () {
+          map.getCanvas().style.cursor = '';
+        });
+
+        var bbox = turf.bbox(data);
+        map.fitBounds(bbox, { padding: 50 });
+
+      });
+
+    });
+  };
+});
   </script>
 </body>
 
