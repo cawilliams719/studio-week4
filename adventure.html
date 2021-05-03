@@ -75,6 +75,7 @@
     .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
       border-bottom-color: rgb(61, 59, 59);
     }
+    /* Styling for Information Console with legend, data links, etc */
     #console {
       position: absolute;
       top: 250px;
@@ -114,6 +115,7 @@
       text-align: center;
     }
 
+    /* Toggle Layer styling */
     #menu {
       background: #fff;
       position: absolute;
@@ -177,42 +179,39 @@
   <br>
 
   <!-- Add a div to give the map somewhere to go -->
-
 <nav id="menu"></nav>
-<div id='map'></div>
- <div id='console'>
-   <h2>July Average Temperature 2005 to 2014</h2>
-    <p>
-    Data:
-    <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/quality-controlled-local-climatological-data-qclcd"
-    >Local Climatological Data</a>
-    </p>
-    <p>
-     GitHub Repository:
-     <a href="https://github.com/cawilliams719/HTplus"
-     >HTplus</a>
-     </p>
-   <div class='session'>
+  <div id='map'></div>
+    <div id='console'>
+     <h2>July Average Temperature 2005 to 2014</h2>
+      <p>
+        Data:
+          <a href="https://www.ncdc.noaa.gov/data-access/land-based-station-data/land-based-datasets/quality-controlled-local-climatological-data-qclcd"
+          >Local Climatological Data</a>
+      </p>
+      <p>
+         GitHub Repository:
+           <a href="https://github.com/cawilliams719/HTplus"
+           >HTplus</a>
+       </p>
+    <div class='session'>
   <h2>Temperature °F</h2>
-  <div class='row colors'>
+    <div class='row colors'></div>
+    <div class='row labels'>
+      <div class='label'>60</div>
+      <div class='label'>64</div>
+      <div class='label'>68</div>
+      <div class='label'>72</div>
+      <div class='label'>76</div>
+      <div class='label'>80</div>
+      <div class='label'>84</div>
+      <div class='label'>88+</div>
+    </div>
   </div>
-  <div class='row labels'>
-    <div class='label'>60</div>
-    <div class='label'>64</div>
-    <div class='label'>68</div>
-    <div class='label'>72</div>
-    <div class='label'>76</div>
-    <div class='label'>80</div>
-    <div class='label'>84</div>
-    <div class='label'>88+</div>
-  </div>
-  </div>
-  <div class=''>
  <h2>Instructions</h2>
- <p>Toggle Layer: In the upper right corner, select which layer you would like to display on/off.</p>
+  <p>Toggle Layer: In the upper right corner, select which averaged July temperature layer you would like to display on/off.</p>
 </div>
-
   <script>
+  // Section 1: add map style and layout
   var transformRequest = (url, resourceType) => {
   var isMapboxRequest =
     url.slice(8, 22) === "api.mapbox.com" ||
@@ -249,7 +248,7 @@
       map.on('load', function () {
         //Add the the layer to the map
         map.addLayer({
-          'id': 'TminAvg',
+          'id': 'Minimum',
           'type': 'circle',
           'source': {
             'type': 'geojson',
@@ -294,7 +293,7 @@
           }
         });
         map.addLayer({
-          'id': 'TmeanAvg',
+          'id': 'Mean',
           'type': 'circle',
           'source': {
             'type': 'geojson',
@@ -339,7 +338,7 @@
           }
         });
         map.addLayer({
-          'id': 'TmaxAvg',
+          'id': 'Maximum',
           'type': 'circle',
           'source': {
             'type': 'geojson',
@@ -396,6 +395,7 @@
           }
         });
 
+// Section 2: popup information and interaction
         // When a click event occurs on a feature in the csvData layer, open a popup at the
         // location of the feature, with description HTML from its properties.
         map.on('click', 'csvData', function (e) {
@@ -441,6 +441,7 @@
   };
 });
 
+// Section 3: add controls to improve map interactivity
     // Add pan and zoom controls: https://docs.mapbox.com/mapbox-gl-js/api/#map#addcontrol
     map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
 
@@ -454,13 +455,14 @@
     'bottom-right'
     );
 
+// Section 4: Toggle layers for temperature min, mean, and max for July avgeraged over 10 yrs
     // Toggle Layers
     map.on('idle', function () {
       // If these two layers have been added to the style,
       // add the toggle buttons.
-      if (map.getLayer('TminAvg') && map.getLayer('TmeanAvg') && map.getLayer('TmaxAvg')) {
+      if (map.getLayer('Minimum') && map.getLayer('Mean') && map.getLayer('Maximum')) {
       // Enumerate ids of the layers.
-      var toggleableLayerIds = ['TminAvg', 'TmeanAvg', 'TmaxAvg'];
+      var toggleableLayerIds = ['Minimum', 'Mean', 'Maximum'];
       // Set up the corresponding toggle button for each layer.
       for (var i = 0; i < toggleableLayerIds.length; i++) {
       var id = toggleableLayerIds[i];
